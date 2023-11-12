@@ -22,10 +22,10 @@ namespace _3_XO
 
         
         /// интуиция и эксперименты
-        /// подогнано с {3} раза
+        /// подогнано с {4} раза
         int ray_force = 5;
         int ray_len = 5;
-        int ray_step = 1;
+        int ray_step = 3;
         int ray_stack = 2;
         float greed = 0.1f;
 
