@@ -1,0 +1,20 @@
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\3 XO.exe
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\3 XO.deps.json
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\3 XO.runtimeconfig.json
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\3 XO.dll
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\3 XO.pdb
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\_3_XO.Game.resources
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.csproj.GenerateResource.cache
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.AssemblyInfoInputs.cache
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.AssemblyInfo.cs
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.csproj.CoreCompileInputs.cache
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.dll
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\refint\3 XO.dll
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.pdb
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\3 XO.genruntimeconfig.cache
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\ref\3 XO.dll
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\obj\Debug\net7.0-windows\_3_XO.Properties.Resources.resources
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\Properties\Resources.resx
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\Resources\Ocur.cur
+C:\Users\Stark\Desktop\Лабы\3сем\3 XO\3 XO\bin\Debug\net7.0-windows\Resources\Xcur.cur
