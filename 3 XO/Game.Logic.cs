@@ -104,84 +104,132 @@ namespace _3_XO
             ///посчитать число элементов
             ///прокрасить все поля от до весом удаляющимся от центра
             ///важно что при стрике ход должен быть в приоритете
+            {
+                foreach (var pos in xArray)
+                {
+                    ///пройтись по направлению до конца луча длины {ray_len} или до другого символа
+                    ///посчитать число элементов
+                    ///прокрасить все поля от до весом удаляющимся от центра
+                    ///важно что при стрике ход должен быть в приоритете
 
-            foreach (var pos  in xArray) {
-                ///пройтись по направлению до конца луча длины {ray_len} или до другого символа
-                ///посчитать число элементов
-                ///прокрасить все поля от до весом удаляющимся от центра
-                ///важно что при стрике ход должен быть в приоритете
 
-                foreach (var vec in new List<Vector2>() { new Vector2(-1,-1), new Vector2(0,-1) , new Vector2(1,-1), new Vector2(-1,0)}){
-                    int i;
-                    for (i = 1; i < ray_len; i++)
-                    {
-                        if (oArray.Contains(pos + i * vec)) {
-                            i--;
-                            break; }
-                    }
-                    int force = 0;
-                    for (; i > -ray_len; i--){
-                        if (oArray.Contains(pos + i * vec)) {
-                            i++;
-                            break; }
-                        if (xArray.Contains(pos + i * vec)) { force += ray_force;force *= ray_stack; }
-                    }
-                    for (; i <ray_len; i++){
-                        if (xArray.Contains(pos + i * vec)) { continue; }
-                        if (oArray.Contains(pos + i * vec)) { break; }
-                        if (turn == "x") {
-                            if (xCalculatedWeights.ContainsKey(pos + vec * i)) { xCalculatedWeights[pos + vec * i] +=force-Math.Abs(i)*ray_step; }
-                            else { xCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
-                        }else{
+                    foreach (var vec in new List<Vector2>() { new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1), new Vector2(-1, 0) }){
+                        int i;
+                        Debug.WriteLine("Calc begin");
+                        for (i = 1; i < ray_len; i++){
+                            Debug.Write(i);
+                            Debug.Write("-");
+                            if (oArray.Contains(pos + i * vec)){
+                                i--;
+                                break;
+                            }
+                        }
+                        Debug.WriteLine("");
+                        int force = 0;
+                        for (; i > -ray_len; i--){
+                            Debug.Write(i);
+                            Debug.Write("-");
+                            if (oArray.Contains(pos + i * vec)){
+                                i++;
+                                break;
+                            }
+                            if (xArray.Contains(pos + i * vec)) { force += ray_force; force *= ray_stack; }
+                        }
+                        Debug.WriteLine("");
+                        for (; i <= ray_len; i++){
+                            if (xArray.Contains(pos + i * vec)) { continue; }
+                            if (oArray.Contains(pos + i * vec)) { break; }
+                            Debug.Write(i);
+                            Debug.Write("-");
                             if (xCalculatedWeights.ContainsKey(pos + vec * i)) { xCalculatedWeights[pos + vec * i] += force - Math.Abs(i) * ray_step; }
                             else { xCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
+                            
+                        }
+                    }
+                }
+
+                foreach (var pos in oArray)
+                {
+                    ///пройтись по направлению до конца луча длины {ray_len} или до другого символа
+                    ///посчитать число элементов
+                    ///прокрасить все поля от до весом удаляющимся от центра
+                    ///важно что при стрике ход должен быть в приоритете
+
+                    foreach (var vec in new List<Vector2>() { new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1), new Vector2(-1, 0) }){
+                        int i;
+                        for (i = 1; i < ray_len; i++){
+                            if (xArray.Contains(pos + i * vec)){
+                                i--;
+                                break;
+                            }
+                        }
+                        int force = 0;
+                        for (; i > -ray_len; i--){
+                            if (xArray.Contains(pos + i * vec)){
+                                i++;
+                                break;
+                            }
+                            if (oArray.Contains(pos + i * vec)) { force += ray_force; force *= ray_stack; }
+                        }
+                        for (; i < ray_len; i++){
+                            if (oArray.Contains(pos + i * vec)) { continue; }
+                            if (xArray.Contains(pos + i * vec)) { break; }
+                            if (turn == "o"){
+                                if (oCalculatedWeights.ContainsKey(pos + vec * i)) { oCalculatedWeights[pos + vec * i] += force - Math.Abs(i) * ray_step; }
+                                else { oCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
+                            }else{
+                                if (oCalculatedWeights.ContainsKey(pos + vec * i)) { oCalculatedWeights[pos + vec * i] += force - Math.Abs(i) * ray_step; }
+                                else { oCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
+                            }
                         }
                     }
                 }
             }
 
-            foreach (var pos  in oArray) {
-                ///пройтись по направлению до конца луча длины {ray_len} или до другого символа
-                ///посчитать число элементов
-                ///прокрасить все поля от до весом удаляющимся от центра
-                ///важно что при стрике ход должен быть в приоритете
-
-                foreach (var vec in new List<Vector2>() { new Vector2(-1,-1), new Vector2(0,-1) , new Vector2(1,-1), new Vector2(-1,0)}){
-                    int i;
-                    for (i = 1; i < ray_len; i++)
-                    {
-                        if (xArray.Contains(pos + i * vec)) {
-                            i--;
-                            break; }
-                    }
-                    int force = 0;
-                    for (; i > -ray_len; i--){
-                        if (xArray.Contains(pos + i * vec)) {
-                            i++;
-                            break; }
-                        if (oArray.Contains(pos + i * vec)) { force += ray_force;force *= ray_stack; }
-                    }
-                    for (; i <ray_len; i++){
-                        if (oArray.Contains(pos + i * vec)) { continue; }
-                        if (xArray.Contains(pos + i * vec)) { break; }
-                        if (turn == "o") {
-                            if (oCalculatedWeights.ContainsKey(pos + vec * i)) { oCalculatedWeights[pos + vec * i] +=force-Math.Abs(i)*ray_step; }
-                            else { oCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
-                        }else{
-                            if (oCalculatedWeights.ContainsKey(pos + vec * i)) { oCalculatedWeights[pos + vec * i] += force - Math.Abs(i) * ray_step; }
-                            else { oCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
-                        }
-                    }
-                }
-            }
-
-            
-            
 
 
+            //foreach (var pos in xArray){
+            //    foreach (var vec in new List<Vector2>() { new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1), new Vector2(-1, 0) }){
+            //        int max, min;
+            //        int force = ray_force;
+            //        for (max = 1; max<ray_len; max++){
+            //            if (oArray.Contains(pos + max * vec)) {max = -max+1;break; }
+            //            if (xArray.Contains(pos + max * vec)) { force += ray_force; force *= ray_stack; }
+            //        }
+            //        for (min = 1; max<ray_len; min++){
+            //            if (oArray.Contains(pos - min * vec)) { min = -min +1;break; }
+            //            if (xArray.Contains(pos - min * vec)) { force += ray_force; force *= ray_stack; }
+            //        }
+            //        if ((max <0 && min < 0) && (-(min+max)<5+1)){//с обоих сторон "o" и длина между ними меньше победной
+            //            force = ray_force;
+            //        }
 
-      
+            //        for (var i = -min; i <= max; i++){
+            //            if (i == 0) { continue; }
+            //            if (xArray.Contains(pos + i * vec)) { continue; }
+            //            if (xCalculatedWeights.ContainsKey(pos + vec * i)) { xCalculatedWeights[pos + vec * i] += force - Math.Abs(i) * ray_step; }
+            //            else { xCalculatedWeights.Add(pos + vec * i, force - Math.Abs(i) * ray_step); }
+            //        }
+            //    }
+            //}
+
         }
+
+
+
+
+
+
+        /*void Choose(string turn)
+        {
+            ///
+            foreach
+        }*/
+
+
+
+
+
 
 
     }
