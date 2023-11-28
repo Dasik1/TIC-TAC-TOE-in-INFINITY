@@ -82,25 +82,29 @@ namespace _3_XO
         private void DrawField(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Color.FromArgb(255, 169, 169, 169), 2);
-            for (int i = BoxSise; i < this.Width; i += BoxSise) {
-                e.Graphics.DrawLine(pen,i, 0, i,this.Height);
+            for (int i = BoxSise; i < this.Width; i += BoxSise)
+            {
+                e.Graphics.DrawLine(pen, i, 0, i, this.Height);
             }
-            
-            for (int i = BoxSise; i <= this.Height; i += BoxSise){
+
+            for (int i = BoxSise; i <= this.Height; i += BoxSise)
+            {
                 e.Graphics.DrawLine(pen, 0, i, this.Width, i);
             }
         }
 
-        private void CursorX() { this.Cursor = new Cursor("Resources/Xcur.cur");}
+        private void CursorX() { this.Cursor = new Cursor("Resources/Xcur.cur"); }
         private void DrawX(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 2);
-            foreach (Vector2 el in xArray){
+            foreach (Vector2 el in xArray)
+            {
                 Vector2 pos = el - FirstBoxCords;
-                if (((pos.X>0)&&(pos.Y>0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height/BoxSise))){
+                if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
+                {
 
-                    e.Graphics.DrawLine(pen, BoxSise*pos.X, BoxSise*pos.Y,
-                                               BoxSise*(pos.X+1), BoxSise*(pos.Y+1));
+                    e.Graphics.DrawLine(pen, BoxSise * pos.X, BoxSise * pos.Y,
+                                               BoxSise * (pos.X + 1), BoxSise * (pos.Y + 1));
                     e.Graphics.DrawLine(pen, BoxSise * (pos.X + 1), BoxSise * pos.Y,
                                                BoxSise * pos.X, BoxSise * (pos.Y + 1));
 
@@ -115,7 +119,7 @@ namespace _3_XO
             foreach (Vector2 el in oArray)
             {
                 Vector2 pos = el - FirstBoxCords;
-                if (((pos.X > 0) && (pos.Y > 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
+                if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
                 {
 
                     e.Graphics.DrawEllipse(pen, BoxSise * pos.X, BoxSise * pos.Y,
@@ -128,23 +132,24 @@ namespace _3_XO
 
         private void DrafForce(object sender, PaintEventArgs e)
         {
-            
-            if (xCalculatedWeights.Count == 0) { return; }
-            foreach (var el in xCalculatedWeights)
+
+            if (xWeights.Count == 0) { return; }
+            foreach (var el in xWeights)
             {
                 Vector2 pos = el.Key - FirstBoxCords;
-                if (((pos.X > 0) && (pos.Y > 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise))){
-                    e.Graphics.DrawString((string)el.Value.ToString(), new Font("Arial", 8), new SolidBrush(Color.Black), pos.X*BoxSise, pos.Y*BoxSise);
+                if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
+                {
+                    e.Graphics.DrawString((string)el.Value.ToString(), new Font("Arial", 8), new SolidBrush(Color.Black), pos.X * BoxSise, pos.Y * BoxSise);
                 }
             }
 
-            if (oCalculatedWeights.Count == 0) { return; }
-            foreach (var el in oCalculatedWeights)
+            if (oWeights.Count == 0) { return; }
+            foreach (var el in oWeights)
             {
                 Vector2 pos = el.Key - FirstBoxCords;
-                if (((pos.X > 0) && (pos.Y > 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
+                if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
                 {
-                    e.Graphics.DrawString((string)el.Value.ToString(), new Font("Arial", 8), new SolidBrush(Color.Black), pos.X * BoxSise, pos.Y * BoxSise+ BoxSise/2);
+                    e.Graphics.DrawString((string)el.Value.ToString(), new Font("Arial", 8), new SolidBrush(Color.Black), pos.X * BoxSise, pos.Y * BoxSise + BoxSise / 2);
                 }
             }
         }
