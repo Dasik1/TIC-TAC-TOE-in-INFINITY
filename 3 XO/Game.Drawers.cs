@@ -130,10 +130,9 @@ namespace _3_XO
         }
 
 
-        private void DrafForce(object sender, PaintEventArgs e)
+        private void DrawForce(object sender, PaintEventArgs e)
         {
-
-            if (xWeights.Count == 0) { return; }
+            
             foreach (var el in xWeights)
             {
                 Vector2 pos = el.Key - FirstBoxCords;
@@ -143,7 +142,7 @@ namespace _3_XO
                 }
             }
 
-            if (oWeights.Count == 0) { return; }
+            
             foreach (var el in oWeights)
             {
                 Vector2 pos = el.Key - FirstBoxCords;

@@ -17,7 +17,6 @@ namespace _3_XO
         public Game()
         {
             InitializeComponent();
-
         }
 
 
@@ -78,7 +77,9 @@ namespace _3_XO
                 DrawField(sender, e);
                 DrawX(sender, e);
                 DrawO(sender, e);
-                DrafForce(sender, e);
+                if (ShowHints){
+                    DrawForce(sender, e);
+                }
             }
         }
 
@@ -93,6 +94,9 @@ namespace _3_XO
             Invalidate();
         }
 
-
+        private void vsComputer_CheckedChanged(object sender, EventArgs e)
+        {
+            vsAI = !vsAI;
+        }
     }
 }

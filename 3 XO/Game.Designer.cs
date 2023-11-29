@@ -169,6 +169,8 @@
             // 
             vsComputer.AutoSize = true;
             vsComputer.BackColor = Color.MidnightBlue;
+            vsComputer.Checked = true;
+            vsComputer.CheckState = CheckState.Checked;
             vsComputer.Enabled = false;
             vsComputer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             vsComputer.ForeColor = Color.Tomato;
@@ -180,6 +182,7 @@
             vsComputer.Text = "vs Computer";
             vsComputer.UseVisualStyleBackColor = false;
             vsComputer.Visible = false;
+            vsComputer.CheckedChanged += vsComputer_CheckedChanged;
             // 
             // Hints
             // 
