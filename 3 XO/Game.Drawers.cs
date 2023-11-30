@@ -96,6 +96,7 @@ namespace _3_XO
         private void CursorX() { this.Cursor = new Cursor("Resources/Xcur.cur"); }
         private void DrawX(object sender, PaintEventArgs e)
         {
+            Debug.WriteLine(FirstBoxCords);
             Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 2);
             foreach (Vector2 el in xArray)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -59,14 +60,13 @@ namespace _3_XO
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == (char)Keys.Escape) { EnableMenu(); }
+            if (e.KeyValue == (char)Keys.Escape) { Debug.WriteLine("esc"); EnableMenu(); }
 
-
-
-            else if (e.KeyValue == (char)Keys.Up) {/*moove field*/ }
-            else if (e.KeyValue == (char)Keys.Down) {/*moove field*/ }
-            else if (e.KeyValue == (char)Keys.Left) {/*moove field*/ }
-            else if (e.KeyValue == (char)Keys.Right) {/*moove field*/ }
+            else if (e.KeyValue == (char)Keys.Up) { FirstBoxCords.Y += 1; }
+            else if (e.KeyValue == (char)Keys.Down) { FirstBoxCords.Y -= 1; }
+            else if (e.KeyValue == (char)Keys.Left) { FirstBoxCords.X += 1; }
+            else if (e.KeyValue == (char)Keys.Right) { FirstBoxCords.X -= 1; }
+            Invalidate();
         }
 
         private void Game_Paint(object sender, PaintEventArgs e)
