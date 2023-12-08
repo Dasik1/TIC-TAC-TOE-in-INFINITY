@@ -60,7 +60,7 @@ namespace _3_XO
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == (char)Keys.Escape) { Debug.WriteLine("esc"); EnableMenu(); }
+            if (e.KeyValue == (char)Keys.Escape) { EnableMenu(); }
 
             else if (e.KeyValue == (char)Keys.Up) { FirstBoxCords.Y += 1; }
             else if (e.KeyValue == (char)Keys.Down) { FirstBoxCords.Y -= 1; }
@@ -77,7 +77,8 @@ namespace _3_XO
                 DrawField(sender, e);
                 DrawX(sender, e);
                 DrawO(sender, e);
-                if (ShowHints){
+                if (ShowHints)
+                {
                     DrawForce(sender, e);
                 }
             }
@@ -90,7 +91,7 @@ namespace _3_XO
 
         private void Game_MouseClick(object sender, MouseEventArgs e)
         {
-            GameStep(new Vector2(e.X, e.Y));
+            if (!GameFinished) { GameStep(new Vector2(e.X, e.Y)); }
             Invalidate();
         }
 

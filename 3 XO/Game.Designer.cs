@@ -146,7 +146,7 @@
             MBGMain.BackColor = Color.DarkBlue;
             MBGMain.Location = new Point(0, 0);
             MBGMain.Name = "MBGMain";
-            MBGMain.Size = new Size(192, 108);
+            MBGMain.Size = new Size(1920, 1080);
             MBGMain.TabIndex = 2;
             MBGMain.TabStop = false;
             MBGMain.Tag = "Menu";

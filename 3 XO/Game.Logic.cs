@@ -14,9 +14,10 @@ namespace _3_XO
 		private List<Vector2> oArray;
 
 		private bool GameStarted = false;
+		private bool GameFinished = false;
 
 		private bool vsAI = true;
-		private bool ShowHints = !false;//-------------------------------------------------------
+		private bool ShowHints = false;//-------------------------------------------------------
 		private string turnAI = "o";
 
 
@@ -24,8 +25,8 @@ namespace _3_XO
 		private int step_size = 4;
 
 
-		/// �������� � ������������
-		/// ��������� � {5} ����
+		/// Время испытать удачу
+		/// Подогнано с {5} раза
 		private int ray_force = 5;
 		private int ray_len = 5;
 		private int ray_step = 1;
@@ -65,21 +66,31 @@ namespace _3_XO
 		void GameStep(Vector2 coords)
 		{
 			Vector2 pos = new Vector2((int)coords.X / BoxSise, (int)coords.Y / BoxSise) + FirstBoxCords;
+			Vector2 win_vec;
+			Vector2 win_pos;
+
 
 			if (xArray.Contains(pos)) { return; }
 			if (oArray.Contains(pos)) { return; }
 
 			if (turn == "x"){
 				xArray.Add(pos);
+				(win_vec, win_pos) = CheckWin(turn);
 				turn = "o";
 				CursorO();
 			}else{
 				oArray.Add(pos);
-				turn = "x";
+                (win_vec, win_pos) = CheckWin(turn);
+                turn = "x";
 				CursorX();
 			}
-			//check win
-			//***
+			if (win_vec != new Vector2(0, 0)) {
+                //DrawWin(win_vec, win_pos);///TODO
+                GameFinished = true;
+				Invalidate();
+				return;
+			}
+
 			CalculateWeights(turn);
 			if (vsAI){
 				//predict step
@@ -88,19 +99,47 @@ namespace _3_XO
 
 				if (turn == "x"){
 					xArray.Add(PredictedStep);
-					turn = "o";
+                    (win_vec, win_pos) = CheckWin(turn);
+                    turn = "o";
 					CursorO();
 				}else{
 					oArray.Add(PredictedStep);
-					turn = "x";
+                    (win_vec, win_pos) = CheckWin(turn);
+                    turn = "x";
 					CursorX();
 				}
-				//check win
-				//***
+
+
+				if (win_vec != new Vector2(0, 0)) {
+					//DrawWin(win_vec, win_pos);///TODO
+					GameFinished = true;
+					Invalidate();
+					return;
+			}
 				CalculateWeights(turn);
 			}
 			
 		}
+
+		(Vector2,Vector2) CheckWin(string turn)
+		{
+			List<Vector2> array;
+			
+            if (turn == "x") { array = xArray;}
+			else { array = oArray;}
+			foreach (var pos in array){
+				foreach (var vec in new List<Vector2>() { new Vector2(-1, -1), new Vector2(0, -1),
+														  new Vector2(1, -1), new Vector2(-1, 0)}){
+					for (int i = 1; i <= 4; i++){
+						if (array.Contains(pos + vec) && array.Contains(pos + 2 * vec) && array.Contains(pos + 3 * vec) && array.Contains(pos + 4 * vec)){
+							return (vec,pos);
+						}
+					}
+				}
+			}
+			return (new Vector2(0, 0), new Vector2(0, 0));
+        }
+
 
 		void CalculateWeights(string turn)
 		{
