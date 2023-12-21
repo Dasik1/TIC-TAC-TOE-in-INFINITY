@@ -21,21 +21,24 @@ namespace _3_XO
 		private string turnAI = "o";
 
 
-		private int reqursion_depth_limit = 2;
-		private int step_size = 4;
+		private int reqursion_depth_limit = 1;
+		private int step_size = 3;
 
 
 		/// Время испытать удачу
-		/// Подогнано с {5} раза
-		private int ray_force = 5;
+		/// Подогнано с {6} раза
+		private int ray_force = 1;
 		private int ray_len = 5;
 		private int ray_step = 1;
-		private int ray_stack = 2;
+		private int ray_stack = 10;
 
 		private Dictionary<Vector2, int> xWeights;
 		private Dictionary<Vector2, int> oWeights;
 
-		private List<Tuple<List<Vector2>, int>> tree;
+        Vector2 win_vec;
+        Vector2 win_pos;
+
+        private List<Tuple<List<Vector2>, int>> tree;
 		private Vector2 PredictedStep;
 
 		private string turn;
@@ -45,7 +48,8 @@ namespace _3_XO
 		void GameStart()
 		{
 			GameStarted = true;
-			turn = "x";
+            GameFinished = false;
+            turn = "x";
 			CursorX();
 
 			xArray = new List<Vector2>();
@@ -66,8 +70,7 @@ namespace _3_XO
 		void GameStep(Vector2 coords)
 		{
 			Vector2 pos = new Vector2((int)coords.X / BoxSise, (int)coords.Y / BoxSise) + FirstBoxCords;
-			Vector2 win_vec;
-			Vector2 win_pos;
+			
 
 
 			if (xArray.Contains(pos)) { return; }
@@ -111,7 +114,6 @@ namespace _3_XO
 
 
 				if (win_vec != new Vector2(0, 0)) {
-					//DrawWin(win_vec, win_pos);///TODO
 					GameFinished = true;
 					Invalidate();
 					return;
@@ -146,7 +148,7 @@ namespace _3_XO
 			(xWeights, oWeights) = CalculateWeights(turn, xArray, oArray);
 		}
 
-		(Dictionary<Vector2, int>, Dictionary<Vector2, int>) CalculateWeights(string turn, List<Vector2> X, List<Vector2> O)
+        /*(Dictionary<Vector2, int>, Dictionary<Vector2, int>) CalculateWeights(string turn, List<Vector2> X, List<Vector2> O)
 		{
 			Dictionary<Vector2, int> xCalculatedWeights = new Dictionary<Vector2, int>();
 			Dictionary<Vector2, int> oCalculatedWeights = new Dictionary<Vector2, int>();
@@ -200,10 +202,109 @@ namespace _3_XO
 				}
 			}
 			return (xCalculatedWeights, oCalculatedWeights);
-		}
+		}*/
 
 
-		void PredictStep(string turn,
+
+
+
+
+
+
+
+
+
+
+
+        (Dictionary<Vector2, int>, Dictionary<Vector2, int>) CalculateWeights(string turn, List<Vector2> X, List<Vector2> O)
+        {
+
+            Dictionary<Vector2, int> xCalculatedWeights = new Dictionary<Vector2, int>();
+            Dictionary<Vector2, int> oCalculatedWeights = new Dictionary<Vector2, int>();
+
+            foreach (var pos in X){
+                foreach (var vec in new List<Vector2>() { new Vector2(1, 0),new Vector2(0, 1),
+														  new Vector2(1, -1), new Vector2(-1, -1)}){
+
+                    var VisionRay = new List<string>();
+                    var DeltLeft = 0;
+                    for (int i = 0; i < ray_len; i++){
+                        DeltLeft += 1;
+                        if (O.Contains(pos - i * vec)) { VisionRay.Add("o"); break; }
+                        
+                        if (X.Contains(pos - i * vec)) { VisionRay.Add("x"); }
+                        else { VisionRay.Add(" "); }
+                    }
+
+                    VisionRay.Reverse();
+
+                    for (int i = 1; i < ray_len; i++){
+                        if (O.Contains(pos + i * vec)) { VisionRay.Add("o"); break; }
+                        if (X.Contains(pos + i * vec)) { VisionRay.Add("x"); }
+                        else { VisionRay.Add(" "); }
+                    }
+
+					if (!VisionRay.Contains(" ")) { continue; }
+					var f = ray_force * (int) Math.Pow(ray_stack, VisionRay.Count(c => c == "x"));
+
+
+					for (var i = 0; i < VisionRay.Count; i++){
+						var Delt = i + 1 - DeltLeft;
+                        var _x = pos + (i+1-DeltLeft) * vec;
+						if (X.Contains(_x)) { continue; }	
+						if (O.Contains(_x)) { continue; }	
+						if (xCalculatedWeights.ContainsKey(_x)) { xCalculatedWeights[_x] += f- Math.Abs(Delt)*ray_step;  }
+						else { xCalculatedWeights.Add(_x, f - Math.Abs(Delt)*ray_step); }
+						
+					}
+                }
+            }
+            foreach (var pos in O){
+                foreach (var vec in new List<Vector2>() { new Vector2(1, 0),new Vector2(0, 1),
+														  new Vector2(1, -1), new Vector2(-1, -1)}){
+
+                    var VisionRay = new List<string>();
+                    var DeltLeft = 0;
+                    for (int i = 0; i < ray_len; i++){
+                        DeltLeft += 1;
+                        if (X.Contains(pos - i * vec)) { VisionRay.Add("x"); break; }
+                        if (O.Contains(pos - i * vec)) { VisionRay.Add("o"); }
+                        else { VisionRay.Add(" "); }
+                    }
+
+                    VisionRay.Reverse();
+
+                    for (int i = 1; i < ray_len; i++){
+                        if (X.Contains(pos + i * vec)) { VisionRay.Add("x"); break; }
+                        if (O.Contains(pos + i * vec)) { VisionRay.Add("o"); }
+                        else { VisionRay.Add(" "); }
+                    }
+
+					if (!VisionRay.Contains(" ")) { continue; }
+					var f = ray_force * (int) Math.Pow(ray_stack, VisionRay.Count(c => c == "o"));
+
+
+					for (var i = 0; i < VisionRay.Count; i++){
+						var Delt = i + 1 - DeltLeft;
+                        var _x = pos + (i+1-DeltLeft) * vec;
+						if (O.Contains(_x)) { continue; }	
+						if (X.Contains(_x)) { continue; }	
+						if (oCalculatedWeights.ContainsKey(_x)) { oCalculatedWeights[_x] += f - Math.Abs(Delt) * ray_step; }
+						else { oCalculatedWeights.Add(_x, f - Math.Abs(Delt) * ray_step); }
+						
+					}
+                }
+            }
+            return (xCalculatedWeights, oCalculatedWeights);
+        }
+
+
+
+
+
+
+
+        void PredictStep(string turn,
 						List<Vector2> X, List<Vector2> O,
 						List<Vector2> Path,
 						Dictionary<Vector2, int> xCalculatedWeights, Dictionary<Vector2, int> oCalculatedWeights,

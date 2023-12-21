@@ -96,10 +96,10 @@ namespace _3_XO
         private void CursorX() { this.Cursor = new Cursor("Resources/Xcur.cur"); }
         private void DrawX(object sender, PaintEventArgs e)
         {
-            Debug.WriteLine(FirstBoxCords);
             Pen pen = new Pen(Color.FromArgb(255, 0, 0, 255), 2);
             foreach (Vector2 el in xArray)
             {
+                if (el == win_pos) { pen = new Pen(Color.FromArgb(255, 255, 0, 255), 2); }
                 Vector2 pos = el - FirstBoxCords;
                 if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
                 {
@@ -110,6 +110,7 @@ namespace _3_XO
                                                BoxSise * pos.X, BoxSise * (pos.Y + 1));
 
                 }
+                if (el == win_pos) { pen = new Pen(Color.FromArgb(255, 0, 0, 255), 2); }
             }
         }
 
@@ -119,6 +120,7 @@ namespace _3_XO
             Pen pen = new Pen(Color.FromArgb(255, 255, 0, 0), 2);
             foreach (Vector2 el in oArray)
             {
+                if (el == win_pos) { pen = new Pen(Color.FromArgb(255, 255, 0, 255), 2); }
                 Vector2 pos = el - FirstBoxCords;
                 if (((pos.X >= 0) && (pos.Y >= 0)) && ((pos.X < this.Width / BoxSise) && (pos.Y < this.Height / BoxSise)))
                 {
@@ -127,6 +129,7 @@ namespace _3_XO
                                                BoxSise, BoxSise);
 
                 }
+                if (el == win_pos) { pen = new Pen(Color.FromArgb(255, 255, 0, 255), 2); }
             }
         }
 
@@ -155,7 +158,7 @@ namespace _3_XO
         }
 
 
-
+        
 
 
 
